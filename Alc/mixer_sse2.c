@@ -27,6 +27,11 @@
 #include "mixer_defs.h"
 
 
+#if (_MSC_VER == 1400)
+	__inline __m128i _mm_castps_si128(__m128 PS) { union { __m128 ps; __m128i pi; } c; c.ps = PS; return c.pi; }
+	__inline __m128 _mm_castsi128_ps(__m128i PI) { union { __m128 ps; __m128i pi; } c; c.pi = PI; return c.ps; }
+#endif
+
 const ALfloat *Resample_lerp32_SSE2(const ALfloat *src, ALuint frac, ALuint increment,
                                     ALfloat *restrict dst, ALuint numsamples)
 {

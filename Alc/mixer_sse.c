@@ -1,6 +1,7 @@
 #include "config.h"
 
 #include <xmmintrin.h>
+#include <emmintrin.h>
 
 #include "AL/al.h"
 #include "AL/alc.h"
@@ -11,6 +12,10 @@
 #include "alAuxEffectSlot.h"
 #include "mixer_defs.h"
 
+
+#if (_MSC_VER == 1400)
+	inline float _mm_cvtss_f32(__m128 A) { return A.m128_f32[0]; }
+#endif
 
 static inline void SetupCoeffs(ALfloat (*restrict OutCoeffs)[2],
                                const HrtfParams *hrtfparams,
